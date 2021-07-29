@@ -1,0 +1,54 @@
+<Defs>
+
+  <RecipeDef ParentName="SurgeryFlesh">
+    <defName>EmergencySurgery_RemoveBodyPart</defName>
+    <label>emergency remove part</label>
+    <description>Remove a body part without medicine.</description>
+    <workerClass>EmergencySurgery.Recipe_RemoveBodyPart_NoMedicine</workerClass>
+    <jobString>Removing body part without anesthetic</jobString>
+    <workAmount>2000</workAmount>
+    <surgerySuccessChanceFactor>1.2</surgerySuccessChanceFactor>
+  </RecipeDef>
+
+  <HediffDef>
+    <hediffClass>HediffWithComps</hediffClass>
+    <defName>EmergencySurgery_SurgicalTrauma</defName>
+    <label>surgical trauma</label>
+    <labelNoun>surgical trauma</labelNoun>
+    <description>lingering trauma from emergency surgery</description>
+    <initialSeverity>0.45</initialSeverity>
+    <stages>
+      <li>
+        <label>minor</label>
+        <painOffset>0.1</painOffset>
+      </li>
+      <li>
+        <minSeverity>0.1</minSeverity>
+        <label>minor</label>
+        <painOffset>0.2</painOffset>
+      </li>
+      <li>
+        <minSeverity>0.2</minSeverity>
+        <label>major</label>
+        <painOffset>0.4</painOffset>
+      </li>
+      <li>
+        <minSeverity>0.3</minSeverity>
+        <label>major</label>
+        <painOffset>0.6</painOffset>
+      </li>
+      <li>
+        <minSeverity>0.4</minSeverity>
+        <label>extreme</label>
+        <painOffset>.8</painOffset>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.1</severityPerDay>
+        <showDaysToRecover>true</showDaysToRecover>
+      </li>
+    </comps>
+  </HediffDef>
+  
+</Defs>
