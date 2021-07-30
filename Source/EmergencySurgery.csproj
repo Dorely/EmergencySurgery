@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmergencySurgery.cs" />
+    <Compile Include="Hediff_SurgicalTrauma.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recipe_Surgery_NoMedicine.cs" />
     <Compile Include="Recipe_RemoveBodyPart_NoMedicine.cs" />

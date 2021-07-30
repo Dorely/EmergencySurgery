@@ -31,7 +31,7 @@ namespace EmergencySurgery
                 num *= surgeon.GetStatValue(StatDefOf.MedicalSurgerySuccessChance);
             if (!this.recipe.surgeryIgnoreEnvironment && patient.InBed())
                 num *= patient.CurrentBed().GetStatValue(StatDefOf.SurgerySuccessChanceFactor);
-            float a = num * MedicineMedicalPotencyToSurgeryChanceFactor.Evaluate(this.GetMedicalPotency()) * this.recipe.surgerySuccessChanceFactor;
+            float a = num * this.recipe.surgerySuccessChanceFactor;
             if (surgeon.InspirationDef == InspirationDefOf.Inspired_Surgery && !patient.RaceProps.IsMechanoid)
             {
                 a *= 2f;
@@ -74,12 +74,6 @@ namespace EmergencySurgery
             if (!patient.RaceProps.Humanlike || patient.needs.mood == null)
                 return;
             patient.needs.mood.thoughts.memories.TryGainMemory(ThoughtDefOf.BotchedMySurgery, surgeon);
-        }
-
-        private float GetMedicalPotency()
-        {
-            //half of herbal medicine
-            return 0.3f;
         }
     }
 }

@@ -31,6 +31,7 @@ namespace EmergencySurgery
 
         public override void ApplyOnPawn(Pawn pawn, BodyPartRecord part, Pawn billDoer, List<Thing> ingredients, Bill bill)
         {
+            AddMemories(pawn, billDoer);
             bool flag1 = MedicalRecipesUtility.IsClean(pawn, part);
             bool flag2 = this.IsViolationOnPawn(pawn, part, Faction.OfPlayer);
             if (billDoer != null)
@@ -54,16 +55,43 @@ namespace EmergencySurgery
 
         public virtual void DamagePart(Pawn pawn, BodyPartRecord part)
         {
-            pawn.TakeDamage(new DamageInfo(DamageDefOf.SurgicalCut, 99999f, 999f, hitPart: part));
-            pawn.health.AddHediff(EmergencySurgeryDefOf.EmergencySurgery_SurgicalTrauma);
+            var parentPart = part.parent;
+            pawn.TakeDamage(new DamageInfo(DamageDefOf.SurgicalCut, 99999f, 999f, hitPart: part, spawnFilth: true));
+            pawn.health.AddHediff(EmergencySurgeryDefOf.EmergencySurgery_SurgicalTrauma, parentPart);
+        }
+
+        public virtual void AddMemories(Pawn patient, Pawn surgeon)
+        {
+            if (ModsConfig.IdeologyActive)
+            {
+                var ideo = patient.Ideo;
+                if (ideo.HasMeme(MemeDefOfExtended.PainIsVirtue))
+                {
+                    patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
+                    return;
+                }
+            }
+
+            if (patient.story.traits.HasTrait(TraitDefOf.Masochist))
+            {
+                patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
+                return;
+            }
+
+            patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperation);
+            
         }
 
         public virtual void ApplyThoughts(Pawn pawn, Pawn billDoer)
         {
             if (pawn.Dead)
+            {
                 ThoughtUtility.GiveThoughtsForPawnExecuted(pawn, billDoer, PawnExecutionKind.OrganHarvesting);
+            }
             else
+            {
                 ThoughtUtility.GiveThoughtsForPawnOrganHarvested(pawn, billDoer);
+            }
         }
 
         public override string GetLabelWhenUsedOn(Pawn pawn, BodyPartRecord part)

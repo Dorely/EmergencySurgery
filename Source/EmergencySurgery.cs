@@ -6,13 +6,26 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 
+namespace RimWorld
+{
+    [DefOf]
+    public static class MemeDefOfExtended
+    {
+        [MayRequireIdeology]
+        public static MemeDef PainIsVirtue;
+    }
+}
+
 namespace EmergencySurgery
 {
+    //TODO cannot verify if infection is working properly, it doesnt seem to be, but the randomness could just mean I'm (un)lucky
 
     [DefOf]
     public static class EmergencySurgeryDefOf
     {
         public static HediffDef EmergencySurgery_SurgicalTrauma;
+        public static ThoughtDef EmergencySurgery_AwakeForOperation;
+        public static ThoughtDef EmergencySurgery_AwakeForOperationGood;
     }
 
     [StaticConstructorOnStartup]
@@ -39,8 +52,6 @@ namespace EmergencySurgery
         static void Postfix()
         {
             MedicalBillDoer = null;
-
-
         }
     }
 
@@ -66,7 +77,7 @@ namespace EmergencySurgery
             pawn.health.forceIncap = false;
 
             __result = true;
-            return false; //don't do the original method - could cause incompatibilities
+            return false; //don't do the original method - this could cause incompatibilities
         }
     }
 
