@@ -101,9 +101,9 @@ namespace EmergencySurgery
             switch (HealthUtility.PartRemovalIntent(pawn, part))
             {
                 case BodyPartRemovalIntent.Harvest:
-                    return (string)"HarvestOrgan".Translate() + " " + "NoMedicine".Translate();
+                    return (string)"HarvestNoMedicine".Translate();
                 case BodyPartRemovalIntent.Amputate:
-                    return part.depth == BodyPartDepth.Inside || part.def.socketed ? (string)"RemoveOrgan".Translate() + " " + "NoMedicine".Translate() : (string)"Amputate".Translate() + " " + "NoMedicine".Translate();
+                    return part.depth == BodyPartDepth.Inside || part.def.socketed ? (string)"RemoveNoMedicine".Translate() : (string)"RemoveNoMedicine".Translate();
                 default:
                     throw new InvalidOperationException();
             }
