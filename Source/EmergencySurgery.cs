@@ -61,7 +61,6 @@ namespace EmergencySurgery
     {
         static bool Prefix(Pawn pawn, ref bool __result)
         {
-            Log.Message($"TryAnesthetize {Bill_Medical_Patches.MedicalBillDoer == null} {Bill_Medical_Patches.MedicalBillDoer?.CurJob.placedThings != null}");
             if(Bill_Medical_Patches.MedicalBillDoer == null)
             {
                 return true;
