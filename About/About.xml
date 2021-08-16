@@ -16,4 +16,7 @@
       <downloadUrl>https://github.com/pardeike/HarmonyRimWorld/releases/latest</downloadUrl>
     </li>
   </modDependencies>
+  <incompatibleWith>
+    <li>llunak.MorePrecepts</li>
+  </incompatibleWith>
 </ModMetaData>
