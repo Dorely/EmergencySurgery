@@ -6,11 +6,10 @@
     <description>Remove a body part without medicine.</description>
     <workerClass>EmergencySurgery.Recipe_RemoveBodyPart_NoMedicine</workerClass>
     <jobString>Removing body part without anesthetic</jobString>
-    <deathOnFailedSurgeryChance>0.15</deathOnFailedSurgeryChance>
+    <deathOnFailedSurgeryChance>0.25</deathOnFailedSurgeryChance>
     <workAmount>2000</workAmount>
-    <surgerySuccessChanceFactor>1.0</surgerySuccessChanceFactor>
+    <surgerySuccessChanceFactor>0.9</surgerySuccessChanceFactor>
     <surgeryIgnoreEnvironment>true</surgeryIgnoreEnvironment>
-	<developmentalStageFilter>Child, Adult</developmentalStageFilter>
   </RecipeDef>
 
   <HediffDef>

@@ -38,14 +38,14 @@ namespace EmergencySurgery
         }
     }
 
-    [HarmonyPatch(typeof(Bill_Medical), "Notify_DoBillStarted")]
+    [HarmonyPatch(typeof(Bill_Medical), "Notify_BillWorkStarted")]
     static class Bill_Medical_Patches
     {
         public static Pawn MedicalBillDoer;
 
         static void Prefix(Pawn billDoer)
         {
-            //store the pawn doing the surgery so that I can read it inside the anasthetize step
+            //store the pawn doing the surgery so that I can read it inside the anesthetize step
             MedicalBillDoer = billDoer;
         }
 
@@ -78,8 +78,11 @@ namespace EmergencySurgery
                 return true;
             }
 
-            pawn.health.forceIncap = true;
-            pawn.health.forceIncap = false;
+
+            //pawn.health.forceIncap = true;
+            //pawn.health.forceIncap = false;
+            pawn.health.forceDowned = true;
+            pawn.health.forceDowned = false;
 
             __result = true;
             return false; //don't do the original method - this could cause incompatibilities

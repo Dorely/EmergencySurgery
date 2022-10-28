@@ -8,7 +8,7 @@ using Verse;
 
 namespace EmergencySurgery
 {
-    class Recipe_RemoveBodyPart_NoMedicine : Recipe_Surgery_NoMedicine
+    class Recipe_RemoveBodyPart_NoMedicine : Recipe_Surgery
     {
         protected virtual bool SpawnPartsWhenRemoved => true;
 
@@ -36,7 +36,8 @@ namespace EmergencySurgery
             bool flag2 = this.IsViolationOnPawn(pawn, part, Faction.OfPlayer);
             if (billDoer != null)
             {
-                if (this.CheckSurgeryFail(billDoer, pawn, part, bill))
+                var ingredientsEmpty = new List<Thing>();
+                if (this.CheckSurgeryFail(billDoer, pawn, ingredientsEmpty, part, bill))
                     return;
                 TaleRecorder.RecordTale(TaleDefOf.DidSurgery, (object)billDoer, (object)pawn);
                 if (this.SpawnPartsWhenRemoved)
