@@ -14,11 +14,11 @@
   </RecipeDef>
 
   <HediffDef>
-    <hediffClass>EmergencySurgery.Hediff_SurgicalTrauma</hediffClass>
+	<hediffClass>EmergencySurgery.Hediff_SurgicalTrauma</hediffClass>
     <defName>EmergencySurgery_SurgicalTrauma</defName>
     <label>surgical trauma</label>
     <labelNoun>surgical trauma</labelNoun>
-    <description>trauma from emergency surgery</description>
+    <description>Trauma from emergency surgery</description>
     <initialSeverity>0.5</initialSeverity>
     <tendable>true</tendable>
     <displayWound>true</displayWound>
@@ -50,15 +50,14 @@
     </stages>
     <comps>
       <li Class="HediffCompProperties_TendDuration">
-        <labelTendedWell>bandaged</labelTendedWell>
-        <labelTendedWellInner>sutured</labelTendedWellInner>
+		<baseTendDurationHours>24</baseTendDurationHours>
       </li>
       <li Class="HediffCompProperties_SeverityPerDay">
         <severityPerDay>-0.1</severityPerDay>
         <showDaysToRecover>true</showDaysToRecover>
       </li>
       <li Class="HediffCompProperties_Infecter">
-        <infectionChance>0.50</infectionChance>
+        <infectionChance>0.3</infectionChance>
       </li>
     </comps>
     <injuryProps>
@@ -91,7 +90,22 @@
     <stages>
       <li>
         <label>Awake for surgery</label>
-        <description>I had surgery without anesthetic... It was awesome!</description>
+        <description>I had surgery without anesthetic... I feel so alive!</description>
+        <baseMoodEffect>15</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+	
+  <ThoughtDef>
+    <defName>EmergencySurgery_PsychopathPerformedAwakeSurgery</defName>
+    <durationDays>2</durationDays>
+    <stackLimit>3</stackLimit>
+    <showBubble>true</showBubble>
+    <validWhileDespawned>true</validWhileDespawned>
+    <stages>
+      <li>
+        <label>Performed painful surgery</label>
+        <description>I got to cut up someone while they screamed!</description>
         <baseMoodEffect>15</baseMoodEffect>
       </li>
     </stages>

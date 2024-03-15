@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using Verse;
+using Verse.Noise;
 
 namespace EmergencySurgery
 {
@@ -22,6 +24,8 @@ namespace EmergencySurgery
                 else if (MedicalRecipesUtility.IsCleanAndDroppable(pawn, part))
                     yield return part;
                 else if (part != pawn.RaceProps.body.corePart && part.def.canSuggestAmputation && pawn.health.hediffSet.hediffs.Any<Hediff>((Predicate<Hediff>)(d => !(d is Hediff_Injury) && d.def.isBad && d.Visible && d.Part == part)))
+                    yield return part;
+                else if (part.def == BodyPartDefOf.Leg || part.def == BodyPartDefOf.Arm || part.def == BodyPartDefOfExtended.Tongue || part.def == BodyPartDefOf.Eye) // add arms, legs, eyes, and tongues to be removed any time
                     yield return part;
             }
         }
@@ -48,7 +52,7 @@ namespace EmergencySurgery
             }
             this.DamagePart(pawn, part);
             if (flag1)
-                this.ApplyThoughts(pawn, billDoer);
+                this.ApplyThoughts(pawn, billDoer, MedicalRecipesUtility.IsCleanAndDroppable(pawn, part));
             if (!flag2)
                 return;
             this.ReportViolation(pawn, billDoer, pawn.HomeFaction, -70);
@@ -66,30 +70,35 @@ namespace EmergencySurgery
             if (ModsConfig.IdeologyActive)
             {
                 var ideo = patient.Ideo;
-                if (ideo.HasMeme(MemeDefOfExtended.PainIsVirtue))
+                if (ideo.HasMeme(MemeDefOfExtended.PainIsVirtue) || ideo.HasPrecept(PreceptDefOfExtended.Pain_Idealized))
                 {
                     patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
                     return;
                 }
             }
 
-            if (patient.story.traits.HasTrait(TraitDefOf.Masochist))
+            if (patient.story.traits.HasTrait(TraitDefOfExtended.Masochist))
             {
                 patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
                 return;
             }
 
             patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperation);
-            
+
+            if (surgeon.story.traits.HasTrait(TraitDefOf.Psychopath) || surgeon.story.traits.HasTrait(TraitDefOf.Bloodlust))
+            {
+                surgeon.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_PsychopathPerformedAwakeSurgery);
+            }
+
         }
 
-        public virtual void ApplyThoughts(Pawn pawn, Pawn billDoer)
+        public virtual void ApplyThoughts(Pawn pawn, Pawn billDoer, bool partWasDropped)
         {
             if (pawn.Dead)
             {
                 ThoughtUtility.GiveThoughtsForPawnExecuted(pawn, billDoer, PawnExecutionKind.OrganHarvesting);
             }
-            else
+            else if (partWasDropped)
             {
                 ThoughtUtility.GiveThoughtsForPawnOrganHarvested(pawn, billDoer);
             }
@@ -99,14 +108,14 @@ namespace EmergencySurgery
         {
             if (pawn.RaceProps.IsMechanoid || pawn.health.hediffSet.PartOrAnyAncestorHasDirectlyAddedParts(part))
                 return RecipeDefOf.RemoveBodyPart.label;
-            switch (HealthUtility.PartRemovalIntent(pawn, part))
+
+            if (part.depth == BodyPartDepth.Outside && part.def != BodyPartDefOf.Eye)
             {
-                case BodyPartRemovalIntent.Harvest:
-                    return (string)"HarvestNoMedicine".Translate();
-                case BodyPartRemovalIntent.Amputate:
-                    return part.depth == BodyPartDepth.Inside || part.def.socketed ? (string)"RemoveNoMedicine".Translate() : (string)"RemoveNoMedicine".Translate();
-                default:
-                    throw new InvalidOperationException();
+                return (string)"RemoveNoMedicine".Translate();
+            }
+            else
+            {
+                return (string)"HarvestNoMedicine".Translate();
             }
         }
     }

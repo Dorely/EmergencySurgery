@@ -14,6 +14,25 @@ namespace RimWorld
         [MayRequireIdeology]
         public static MemeDef PainIsVirtue;
     }
+
+    [DefOf]
+    public static class PreceptDefOfExtended
+    {
+        [MayRequireIdeology]
+        public static PreceptDef Pain_Idealized;
+    }
+
+    [DefOf]
+    public static class TraitDefOfExtended
+    {
+        public static TraitDef Masochist;
+    }
+
+    [DefOf]
+    public static class BodyPartDefOfExtended
+    {
+        public static BodyPartDef Tongue;
+    }
 }
 
 namespace EmergencySurgery
@@ -26,6 +45,7 @@ namespace EmergencySurgery
         public static HediffDef EmergencySurgery_SurgicalTrauma;
         public static ThoughtDef EmergencySurgery_AwakeForOperation;
         public static ThoughtDef EmergencySurgery_AwakeForOperationGood;
+        public static ThoughtDef EmergencySurgery_PsychopathPerformedAwakeSurgery;
     }
 
     [StaticConstructorOnStartup]
