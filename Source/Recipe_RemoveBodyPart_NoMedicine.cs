@@ -67,11 +67,16 @@ namespace EmergencySurgery
 
         public virtual void AddMemories(Pawn patient, Pawn surgeon)
         {
+            //Log.Message($"AddMemories called for patient: {patient.Name}, surgeon: {surgeon?.Name}");
+
             if (ModsConfig.IdeologyActive)
             {
                 var ideo = patient.Ideo;
+                //Log.Message($"Ideology active. Patient's ideology: {ideo.name}");
+
                 if (ideo.HasMeme(MemeDefOfExtended.PainIsVirtue) || ideo.HasPrecept(PreceptDefOfExtended.Pain_Idealized))
                 {
+                    //Log.Message("Patient has PainIsVirtue meme or Pain_Idealized precept.");
                     patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
                     return;
                 }
@@ -79,17 +84,24 @@ namespace EmergencySurgery
 
             if (patient.story.traits.HasTrait(TraitDefOfExtended.Masochist))
             {
+                //Log.Message("Patient has Masochist trait.");
                 patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperationGood);
                 return;
             }
 
+            //Log.Message("Patient does not have special traits or memes. Applying default memory.");
             patient.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_AwakeForOperation);
 
-            if (surgeon.story.traits.HasTrait(TraitDefOf.Psychopath) || surgeon.story.traits.HasTrait(TraitDefOf.Bloodlust))
+            if (surgeon?.story?.traits != null)
             {
-                surgeon.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_PsychopathPerformedAwakeSurgery);
-            }
+                //Log.Message($"Surgeon traits: Psychopath: {surgeon.story.traits.HasTrait(TraitDefOf.Psychopath)}, Bloodlust: {surgeon.story.traits.HasTrait(TraitDefOf.Bloodlust)}");
 
+                if (surgeon.story.traits.HasTrait(TraitDefOf.Psychopath) || surgeon.story.traits.HasTrait(TraitDefOf.Bloodlust))
+                {
+                    //Log.Message("Surgeon has Psychopath or Bloodlust trait.");
+                    surgeon.needs.mood.thoughts.memories.TryGainMemory(EmergencySurgeryDefOf.EmergencySurgery_PsychopathPerformedAwakeSurgery);
+                }
+            }
         }
 
         public virtual void ApplyThoughts(Pawn pawn, Pawn billDoer, bool partWasDropped)
