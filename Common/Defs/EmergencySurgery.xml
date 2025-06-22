@@ -8,7 +8,7 @@
     <jobString>Removing body part without anesthetic</jobString>
     <deathOnFailedSurgeryChance>0.05</deathOnFailedSurgeryChance>
     <workAmount>2000</workAmount>
-    <surgerySuccessChanceFactor>1.5</surgerySuccessChanceFactor>
+    <surgerySuccessChanceFactor>3.0</surgerySuccessChanceFactor>
     <surgeryIgnoreEnvironment>true</surgeryIgnoreEnvironment>
 	<developmentalStageFilter>Child, Adult</developmentalStageFilter>
   </RecipeDef>

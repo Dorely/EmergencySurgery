@@ -95,11 +95,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)..\Common\Assemblies\EmergencySurgery.dll" "$(ProjectDir)..\1.5\Assemblies\" /S /C /Y /K /I /Q /D
+    <PostBuildEvent>xcopy "$(ProjectDir)..\Common\Assemblies\EmergencySurgery.dll" "$(ProjectDir)..\1.6\Assemblies\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\Common\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\Common\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\1.3\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\1.3\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\1.4\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\1.4\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\1.5\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\1.5\" /S /C /Y /K /I /Q /D
+xcopy "$(ProjectDir)..\1.6\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\1.6\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\About\" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\About\" /S /C /Y /K /I /Q /D
 xcopy "$(ProjectDir)..\LoadFolders.xml" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\EmergencySurgery_Release\" /S /C /Y /K /I /Q /D</PostBuildEvent>
   </PropertyGroup>
